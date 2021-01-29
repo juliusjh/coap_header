@@ -8,6 +8,7 @@ fn main() -> Result<(), &'static str> {
     let bytes: [u8; 4] = [64, 1, 0, 1];
     let header = CoAPHeader::from_bytes(bytes)?;
     println!("First:\n{}\n", header);
+
     let bytes1: [u8; 4] = [96, 95, 0, 1];
     let header1 = CoAPHeader::from_bytes(bytes1)?;
     println!("Second:\n{}\n", header1);

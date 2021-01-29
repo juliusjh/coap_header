@@ -17,36 +17,6 @@ pub enum Method {
     Other(u8),
 }
 
-impl From<Method> for u8 {
-    fn from(value: Method) -> u8 {
-        match value {
-            Method::Empty => 0,
-            Method::Get => 1,
-            Method::Post => 2,
-            Method::Other(v) => v,
-        }
-    }
-}
-
-impl TryFrom<u8> for Method {
-    type Error = &'static str;
-
-    fn try_from(value: u8) -> Result<Self, Self::Error> {
-        match value {
-            0 => Ok(Self::Empty),
-            1 => Ok(Self::Get),
-            2 => Ok(Self::Post),
-            _ => {
-                if value > 7 {
-                    Err("Only values between 0 and 7 are valid methods.")
-                } else {
-                    Ok(Self::Other(value))
-                }
-            }
-        }
-    }
-}
-
 #[derive(Debug)]
 pub enum Success {
     Created,
@@ -126,6 +96,10 @@ impl Header {
 
     /* TODO
     pub to_bytes(&self) -> [u8, 4] {
+
+    }
+
+    pub is_valid(&self) -> bool {
 
     }
     */
@@ -317,6 +291,36 @@ impl TryFrom<u8> for MsgType {
             2 => Ok(Self::Acknowlegment),
             3 => Ok(Self::Reset),
             _ => Err("Only values between 0 and 4 are valid message types."),
+        }
+    }
+}
+
+impl From<Method> for u8 {
+    fn from(value: Method) -> u8 {
+        match value {
+            Method::Empty => 0,
+            Method::Get => 1,
+            Method::Post => 2,
+            Method::Other(v) => v,
+        }
+    }
+}
+
+impl TryFrom<u8> for Method {
+    type Error = &'static str;
+
+    fn try_from(value: u8) -> Result<Self, Self::Error> {
+        match value {
+            0 => Ok(Self::Empty),
+            1 => Ok(Self::Get),
+            2 => Ok(Self::Post),
+            _ => {
+                if value > 7 {
+                    Err("Only values between 0 and 7 are valid methods.")
+                } else {
+                    Ok(Self::Other(value))
+                }
+            }
         }
     }
 }
